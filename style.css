@@ -1,0 +1,19 @@
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}
+
+.restaurant-info {
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.meals {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
