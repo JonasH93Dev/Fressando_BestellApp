@@ -3,31 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <title>Fressando</title>
-  
   <link rel="stylesheet" href="styles/fonts.css">
   <link rel="stylesheet" href="styles/standard.css">
   <link rel="stylesheet" href="styles/assets.css">
   <link rel="stylesheet" href="styles/basket.css">
-  <link rel="stylesheet" href="styles/style.css">
-
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-  <header>
-    <div class="logo">Fressando 🍔</div>
-    <div class="menu-icon">☰</div>
-  </header>
+  <div id="pageWrapper">
+    <header>
+      <div id="logo">Fressando 🍔</div>
+      <div id="menuButton">☰</div>
+    </header>
 
-  <main>
-    <section class="restaurant-info">
-    </section>
+    <div id="content">
+      <main>
+        <div id="restaurantInfo">
+          <img src="assets/img/restaurant.jpg" alt="Restaurant" class="restaurant-img">
+          <h2>Zum goldenen Löffel</h2>
+          <p>⭐ 4.8 (435 Bewertungen)</p>
+          <p>Frisch. Regional. Schnell geliefert.</p>
+          <p>Lieferkosten: 2,90 €</p>
+        </div>
 
-    <section class="meals">
-    </section>
-  </main>
+        <div id="meals">
+          <div class="meal">
+            <div class="meal-title">Pizza Margherita</div>
+            <div class="meal-desc">mit Mozzarella</div>
+            <div class="meal-bottom">
+              <div class="meal-price">5,90 €</div>
+              <div class="meal-add">+</div>
+            </div>
+          </div>
+          <div class="meal">
+            <div class="meal-title">Pizza Krabben</div>
+            <div class="meal-desc">mit Krabben und Peperoni</div>
+            <div class="meal-bottom">
+              <div class="meal-price">9,50 €</div>
+              <div class="meal-add">+</div>
+            </div>
+          </div>
+        </div>
+      </main>
 
-  <aside class="basket">
-  </aside>
+      <aside id="basket">
+        <h3>Warenkorb</h3>
+        <p>Pizza Margherita x1 – 5,90 €</p>
+        <p>Pizza Krabben x1 – 9,50 €</p>
+        <hr>
+        <p>Zwischensumme: 15,40 €</p>
+        <p>Lieferkosten: 2,90 €</p>
+        <strong>Gesamt: 18,30 €</strong>
+      </aside>
+    </div>
+
+    <footer>
+      <p>© 2025 Fressando – Alle Rechte vorbehalten</p>
+    </footer>
+  </div>
 
 </body>
 </html>

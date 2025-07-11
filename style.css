@@ -1,19 +1,82 @@
-main {
+html, body {
+  height: 100%;
+}
+#pageWrapper {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+header {
+  background-color: orange;
+  color: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#content {
+  display: flex;
+  flex: 1;
   gap: 24px;
   padding: 24px;
 }
-
-.restaurant-info {
+main {
+  flex: 1;
+}
+#restaurantInfo {
   background-color: white;
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  margin-bottom: 24px;
 }
-
-.meals {
+#restaurantInfo h2 {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+#restaurantInfo p {
+  margin-bottom: 6px;
+}
+#meals {
+  padding: 0 8px;
+}
+.meal {
+  background-color: white;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.meal-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+.meal-desc {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+.meal-bottom {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+.meal-price {
+  color: orange;
+  font-weight: bold;
+}
+.meal-add {
+  background-color: orange;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+footer {
+  text-align: center;
+  padding: 16px;
+  background-color: #f0f0f0;
+  color: #666;
+  font-size: 14px;
+  margin-top: auto;
 }
