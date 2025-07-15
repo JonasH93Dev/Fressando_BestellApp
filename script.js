@@ -13,14 +13,35 @@ window.onload = function () {
   renderMenu();
 };
 
-let cart = [];
+let cart = []; 
 
 function addToCart(index) {
-  let meal = menu[index]; 
-  cart.push(meal); 
-  renderCart(); 
+  let meal = menu[index];
+  
+  let existing = cart.find(item => item.meal.name === meal.name);
+
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cart.push({ meal: meal, quantity: 1 });
+  }
+
+  renderCart();
 }
 
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  renderCart();
+}
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+function loadCart() {
+  let savedCart = localStorage.getItem("cart");
+  if (savedCart) {
+    cart = JSON.parse(savedCart);
+  }
+}
 
 function renderCart() {
   let cartBox = document.querySelector("#basket .cart-content");
@@ -31,8 +52,22 @@ function renderCart() {
     return;
   }
 
+  let total = 0;
+
   for (let i = 0; i < cart.length; i++) {
     let item = cart[i];
-    cartBox.innerHTML += getCartItemTemplate(item);
+    total += item.meal.price * item.quantity;
+    cartBox.innerHTML += getCartItemTemplate(item, i);
   }
+
+  cartBox.innerHTML += getCartTotalTemplate(total);
+
+  saveCart();
 }
+
+window.onload = function () {
+  loadCart(); 
+  renderMenu(); 
+  renderCart(); 
+};
+

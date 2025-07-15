@@ -19,3 +19,23 @@ function getCartItemTemplate(item) {
     </div>
   `;
 }
+
+function getCartItemTemplate(item, i) {
+  let subtotal = item.meal.price * item.quantity;
+  return `
+    <div class="cart-item">
+      <span>${item.quantity}x ${item.meal.name}</span>
+      <span>${subtotal.toFixed(2).replace(".", ",")} €</span>
+      <button onclick="removeFromCart(${i})">🗑️</button>
+    </div>
+  `;
+}
+
+function getCartTotalTemplate(total) {
+  return `
+    <div class="cart-total">
+      <strong>Gesamt:</strong> ${total.toFixed(2).replace(".", ",")} €
+    </div>
+  `;
+}
+
