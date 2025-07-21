@@ -4,7 +4,7 @@ function renderMenu() {
 
   for (let i = 0; i < menu.length; i++) {
     let meal = menu[i];
-    mealsContainer.innerHTML += getMealTemplate(meal, i); 
+    mealsContainer.innerHTML += getMealTemplate(meal, i);
   }
 }
 
@@ -13,11 +13,11 @@ window.onload = function () {
   renderMenu();
 };
 
-let cart = []; 
+let cart = [];
 
 function addToCart(index) {
   let meal = menu[index];
-  
+
   let existing = cart.find(item => item.meal.name === meal.name);
 
   if (existing) {
@@ -66,8 +66,44 @@ function renderCart() {
 }
 
 window.onload = function () {
-  loadCart(); 
-  renderMenu(); 
-  renderCart(); 
+  loadCart();
+  renderMenu();
+  renderCart();
 };
 
+function increaseQuantity(index) {
+  cart[index].quantity++;
+  renderCart();
+}
+
+function decreaseQuantity(index) {
+  cart[index].quantity--;
+
+  if (cart[index].quantity <= 0) {
+    cart.splice(index, 1);
+  }
+
+  renderCart();
+}
+
+function placeOrder() {
+  if (cart.length === 0) {
+    alert("Dein Warenkorb ist leer.");
+    return;
+  }
+
+  alert("Vielen Dank für deine Bestellung!");
+
+  cart = []; 
+  saveCart();
+  renderCart();
+}
+
+function showOrderMessage() {
+  let msgBox = document.getElementById("orderMessage");
+  msgBox.innerHTML = getOrderSuccessTemplate();
+
+  setTimeout(() => {
+    msgBox.innerHTML = "";
+  }, 4000);
+}

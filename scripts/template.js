@@ -20,21 +20,35 @@ function getCartItemTemplate(item) {
   `;
 }
 
-function getCartItemTemplate(item, i) {
+function getCartItemTemplate(item, index) {
   let subtotal = item.meal.price * item.quantity;
   return `
     <div class="cart-item">
       <span>${item.quantity}x ${item.meal.name}</span>
       <span>${subtotal.toFixed(2).replace(".", ",")} €</span>
-      <button onclick="removeFromCart(${i})">🗑️</button>
+      <div class="quantity-controls">
+        <button onclick="decreaseQuantity(${index})">➖</button>
+        <button onclick="increaseQuantity(${index})">➕</button>
+        <button onclick="removeFromCart(${index})">🗑️</button>
+      </div>
     </div>
   `;
 }
+
 
 function getCartTotalTemplate(total) {
   return `
     <div class="cart-total">
       <strong>Gesamt:</strong> ${total.toFixed(2).replace(".", ",")} €
+    </div>
+    <button onclick="placeOrder()" class="order-button">Jetzt bestellen</button>
+  `;
+}
+
+function getOrderSuccessTemplate() {
+  return `
+    <div class="order-success">
+      🎉 Vielen Dank für deine Bestellung!
     </div>
   `;
 }
