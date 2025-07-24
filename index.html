@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="assets/icons/logo.png">
-
   <title>Fressando</title>
   <link rel="stylesheet" href="./styles/standard.css">
   <link rel="stylesheet" href="./styles/basket.css">
@@ -13,20 +11,24 @@
   <link rel="stylesheet" href="./styles/assets.css">
   <link rel="stylesheet" href="./styles/fonts.css">
 </head>
-<div id="orderPopup" class="popup hidden">
-  🎉 Vielen Dank für deine Bestellung!
-</div>
-
 <body>
+  <div id="orderMessage" class="popup hidden">
+    🎉 Vielen Dank für deine Bestellung!
+  </div>
+
+  <div id="overlay" class="overlay hidden"></div>
+
   <div id="pageWrapper">
     <header id="header">
       <div id="logo">
         <img src="assets/icons/logo.png" alt="Fressando Logo" class="logo-img">
         Fressando
       </div>
-      <div id="menuButton">☰</div>
+      <div id="cartButton">
+        🛒
+        <span id="cartCount" class="cart-count">0</span>
+      </div>
     </header>
-
 
     <div id="content">
       <main id="main">
@@ -36,19 +38,15 @@
           <div id="ratingContainer"></div>
           <p>Italienisch • Burger • Salate</p>
         </section>
-
-
         <div id="meals"></div>
       </main>
 
       <aside id="basket" class="cart-box">
-        <h3>Warenkorb</h3>
+        <h3>Warenkorb <span id="closeCart" class="close-btn">×</span></h3>
         <div class="cart-content">
           <p>Dein Warenkorb ist leer.</p>
         </div>
       </aside>
-      <div id="orderMessage"></div>
-
     </div>
 
     <footer id="footer">
@@ -60,5 +58,4 @@
   <script src="./scripts/template.js"></script>
   <script src="./script.js"></script>
 </body>
-
 </html>

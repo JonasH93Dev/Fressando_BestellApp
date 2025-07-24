@@ -46,11 +46,13 @@ function renderCart() {
   cartBox.innerHTML = "";
   let total = 0;
   let hasItems = false;
+  let totalCount = 0;
 
   for (let i = 0; i < menus.length; i++) {
     if (amounts[i] > 0) {
       cartBox.innerHTML += getCartItemTemplate(menus[i], prices[i], amounts[i], i);
       total += prices[i] * amounts[i];
+      totalCount += amounts[i];
       hasItems = true;
     }
   }
@@ -60,6 +62,14 @@ function renderCart() {
   } else {
     cartBox.innerHTML += getCartTotalTemplate(total);
   }
+
+  let cartCountEl = document.getElementById("cartCount");
+  if (totalCount > 0) {
+    cartCountEl.style.display = "inline";
+    cartCountEl.textContent = totalCount;
+  } else {
+    cartCountEl.style.display = "none";
+  }
 }
 
 function saveCart() {
@@ -68,39 +78,52 @@ function saveCart() {
 
 function loadCart() {
   let stored = localStorage.getItem("amounts");
-  if (stored) amounts = JSON.parse(stored);
+  if (stored) {
+    amounts = JSON.parse(stored);
+  }
 }
 
 function placeOrder() {
   if (amounts.every(amount => amount === 0)) return;
   showOrderMessage();
-  for (let i = 0; i < amounts.length; i++) amounts[i] = 0;
+  for (let i = 0; i < amounts.length; i++) {
+    amounts[i] = 0;
+  }
   saveCart();
   renderCart();
 }
 
 function showOrderMessage() {
   let msgBox = document.getElementById("orderMessage");
-  msgBox.innerHTML = getOrderSuccessTemplate();
-  setTimeout(() => msgBox.innerHTML = "", 4000);
+  msgBox.classList.remove("hidden");
+  msgBox.classList.add("show");
+  setTimeout(() => {
+    msgBox.classList.remove("show");
+    msgBox.classList.add("hidden");
+  }, 3000);
 }
 
-function renderRating(rating, reviews) {
-  let fullStars = Math.floor(rating);
-  let hasHalfStar = rating % 1 >= 0.5;
-  let emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+const basket = document.getElementById("basket");
+const overlay = document.getElementById("overlay");
 
-  let starsHTML = "";
-  for (let i = 0; i < fullStars; i++) starsHTML += `<span class="star full">★</span>`;
-  if (hasHalfStar) starsHTML += `<span class="star half">★</span>`;
-  for (let i = 0; i < emptyStars; i++) starsHTML += `<span class="star empty">★</span>`;
+document.getElementById("cartButton").addEventListener("click", () => {
+  if (window.innerWidth <= 500) {
+    basket.classList.add("mobile");
+    basket.classList.add("open");
+    overlay.classList.remove("hidden");
+  }
+});
 
-  document.getElementById("ratingContainer").innerHTML = getRatingTemplate(starsHTML, reviews);
+document.getElementById("closeCart").addEventListener("click", closeCart);
+overlay.addEventListener("click", closeCart);
+
+function closeCart() {
+  basket.classList.remove("open");
+  overlay.classList.add("hidden");
 }
 
 window.onload = function () {
   loadCart();
   renderMenu();
   renderCart();
-  renderRating(0.5, 249125);
 };
