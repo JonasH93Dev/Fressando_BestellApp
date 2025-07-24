@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/icons/logo.png">
 
   <title>Fressando</title>
   <link rel="stylesheet" href="./styles/standard.css">
@@ -12,21 +13,30 @@
   <link rel="stylesheet" href="./styles/assets.css">
   <link rel="stylesheet" href="./styles/fonts.css">
 </head>
+<div id="orderPopup" class="popup hidden">
+  🎉 Vielen Dank für deine Bestellung!
+</div>
 
 <body>
   <div id="pageWrapper">
     <header id="header">
-      <div id="logo">Fressando</div>
+      <div id="logo">
+        <img src="assets/icons/logo.png" alt="Fressando Logo" class="logo-img">
+        Fressando
+      </div>
       <div id="menuButton">☰</div>
     </header>
+
 
     <div id="content">
       <main id="main">
         <section id="restaurantInfo">
-          <img class="restaurant-img" src="assets/img/restaurant.jpg" alt="Restaurant">
+          <img class="restaurant-img" src="assets/img/food.png" alt="Restaurant">
           <h2>Zur goldenen Gabel</h2>
+          <div id="ratingContainer"></div>
           <p>Italienisch • Burger • Salate</p>
         </section>
+
 
         <div id="meals"></div>
       </main>

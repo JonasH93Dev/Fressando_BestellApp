@@ -1,100 +1,80 @@
-function renderMenu() {
-  let mealsContainer = document.getElementById("meals");
-  mealsContainer.innerHTML = "";
+let menus = [];
+let prices = [];
+let amounts = [];
 
-  for (let i = 0; i < menu.length; i++) {
-    let meal = menu[i];
-    mealsContainer.innerHTML += getMealTemplate(meal, i);
-  }
+for (let i = 0; i < menu.length; i++) {
+  menus.push(menu[i].name);
+  prices.push(menu[i].price);
+  amounts.push(0);
 }
 
-
-window.onload = function () {
-  renderMenu();
-};
-
-let cart = [];
-
 function addToCart(index) {
-  let meal = menu[index];
-
-  let existing = cart.find(item => item.meal.name === meal.name);
-
-  if (existing) {
-    existing.quantity++;
-  } else {
-    cart.push({ meal: meal, quantity: 1 });
-  }
-
+  amounts[index]++;
   renderCart();
+  saveCart();
+}
+
+function increaseQuantity(index) {
+  amounts[index]++;
+  renderCart();
+  saveCart();
+}
+
+function decreaseQuantity(index) {
+  amounts[index]--;
+  if (amounts[index] < 0) amounts[index] = 0;
+  renderCart();
+  saveCart();
 }
 
 function removeFromCart(index) {
-  cart.splice(index, 1);
+  amounts[index] = 0;
   renderCart();
+  saveCart();
 }
-function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
-function loadCart() {
-  let savedCart = localStorage.getItem("cart");
-  if (savedCart) {
-    cart = JSON.parse(savedCart);
+
+function renderMenu() {
+  let mealsContainer = document.getElementById("meals");
+  mealsContainer.innerHTML = "";
+  for (let i = 0; i < menus.length; i++) {
+    mealsContainer.innerHTML += getMealTemplate(menus[i], menu[i].description, prices[i], i);
   }
 }
 
 function renderCart() {
   let cartBox = document.querySelector("#basket .cart-content");
   cartBox.innerHTML = "";
-
-  if (cart.length === 0) {
-    cartBox.innerHTML = "<p>Dein Warenkorb ist leer.</p>";
-    return;
-  }
-
   let total = 0;
+  let hasItems = false;
 
-  for (let i = 0; i < cart.length; i++) {
-    let item = cart[i];
-    total += item.meal.price * item.quantity;
-    cartBox.innerHTML += getCartItemTemplate(item, i);
+  for (let i = 0; i < menus.length; i++) {
+    if (amounts[i] > 0) {
+      cartBox.innerHTML += getCartItemTemplate(menus[i], prices[i], amounts[i], i);
+      total += prices[i] * amounts[i];
+      hasItems = true;
+    }
   }
 
-  cartBox.innerHTML += getCartTotalTemplate(total);
-
-  saveCart();
-}
-
-window.onload = function () {
-  loadCart();
-  renderMenu();
-  renderCart();
-};
-
-function increaseQuantity(index) {
-  cart[index].quantity++;
-  renderCart();
-}
-
-function decreaseQuantity(index) {
-  cart[index].quantity--;
-
-  if (cart[index].quantity <= 0) {
-    cart.splice(index, 1);
+  if (!hasItems) {
+    cartBox.innerHTML = "<p>Dein Warenkorb ist leer.</p>";
+  } else {
+    cartBox.innerHTML += getCartTotalTemplate(total);
   }
+}
 
-  renderCart();
+function saveCart() {
+  localStorage.setItem("amounts", JSON.stringify(amounts));
+}
+
+function loadCart() {
+  let stored = localStorage.getItem("amounts");
+  if (stored) amounts = JSON.parse(stored);
 }
 
 function placeOrder() {
-  if (cart.length === 0) {
-    alert("Dein Warenkorb ist leer.");
-    return;
-  }
-
-  alert("Vielen Dank für deine Bestellung!");
-
-  cart = []; 
+  if (amounts.every(amount => amount === 0)) return;
+  showOrderMessage();
+  for (let i = 0; i < amounts.length; i++) amounts[i] = 0;
   saveCart();
   renderCart();
 }
@@ -102,8 +82,25 @@ function placeOrder() {
 function showOrderMessage() {
   let msgBox = document.getElementById("orderMessage");
   msgBox.innerHTML = getOrderSuccessTemplate();
-
-  setTimeout(() => {
-    msgBox.innerHTML = "";
-  }, 4000);
+  setTimeout(() => msgBox.innerHTML = "", 4000);
 }
+
+function renderRating(rating, reviews) {
+  let fullStars = Math.floor(rating);
+  let hasHalfStar = rating % 1 >= 0.5;
+  let emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+  let starsHTML = "";
+  for (let i = 0; i < fullStars; i++) starsHTML += `<span class="star full">★</span>`;
+  if (hasHalfStar) starsHTML += `<span class="star half">★</span>`;
+  for (let i = 0; i < emptyStars; i++) starsHTML += `<span class="star empty">★</span>`;
+
+  document.getElementById("ratingContainer").innerHTML = getRatingTemplate(starsHTML, reviews);
+}
+
+window.onload = function () {
+  loadCart();
+  renderMenu();
+  renderCart();
+  renderRating(0.5, 249125);
+};

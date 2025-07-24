@@ -1,52 +1,87 @@
 #basket {
-  width: 280px;
+  width: 300px;
   height: fit-content;
   position: sticky;
   top: 24px;
   background-color: white;
-  padding: 16px;
+  padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-size: 18px;
 }
 
-.quantity-controls {
+.cart-item {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.item-info {
   display: flex;
-  gap: 6px;
-  margin-top: 4px;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+  margin-bottom: 8px;
 }
 
-.quantity-controls button {
-  background-color: transparent;
+.item-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.round-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 4px 6px;
-  font-size: 14px;
+  font-size: 20px;
+  font-weight: bold;
   color: #333;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.quantity-controls button:hover {
-  background-color: #f0f0f0;
+.round-btn:hover {
+  background-color: #ddd;
   border-color: #999;
 }
 
-.order-button {
-  margin-top: 10px;
-  width: 100%;
-  padding: 10px;
-  background-color: #4a90e2;
+.delete-btn {
+  background-color: #ff5c5c;
   color: white;
   border: none;
-  border-radius: 6px;
+}
+
+.delete-btn:hover {
+  background-color: #e64b4b;
+}
+
+.cart-total {
+  margin-top: 16px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.order-button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 16px;
+  background-color: #ff8000;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 22px;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .order-button:hover {
-  background-color: #357acb;
+  background-color: #e67000;
+  transform: scale(1.04);
 }

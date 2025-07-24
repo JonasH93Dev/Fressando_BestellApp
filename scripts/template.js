@@ -1,47 +1,40 @@
-function getMealTemplate(meal, index) {
+function getMealTemplate(name, description, price, index) {
   return `
     <div class="meal">
-      <div class="meal-title">${meal.name}</div>
-      <div class="meal-desc">${meal.description}</div>
+      <div class="meal-title">${name}</div>
+      <div class="meal-desc">${description}</div>
       <div class="meal-bottom">
-        <div class="meal-price">${meal.price.toFixed(2).replace(".", ",")} €</div>
-        <div class="meal-add" onclick="addToCart(${index})">+</div>
+        <div class="meal-price">${price.toFixed(2).replace(".", ",")} €</div>
+        <button onclick="addToCart(${index})" class="round-btn add-btn">+</button>
       </div>
     </div>
   `;
 }
 
-function getCartItemTemplate(item) {
-  return `
-    <div class="cart-item">
-      <span>${item.name}</span>
-      <span>${item.price.toFixed(2).replace(".", ",")} €</span>
-    </div>
-  `;
-}
 
-function getCartItemTemplate(item, index) {
-  let subtotal = item.meal.price * item.quantity;
+function getCartItemTemplate(name, price, quantity, index) {
+  let total = (price * quantity).toFixed(2).replace(".", ",");
   return `
     <div class="cart-item">
-      <span>${item.quantity}x ${item.meal.name}</span>
-      <span>${subtotal.toFixed(2).replace(".", ",")} €</span>
-      <div class="quantity-controls">
-        <button onclick="decreaseQuantity(${index})">➖</button>
-        <button onclick="increaseQuantity(${index})">➕</button>
-        <button onclick="removeFromCart(${index})">🗑️</button>
+      <div class="item-info">
+        <span>${quantity}x ${name}</span>
+        <span>${total} €</span>
+      </div>
+      <div class="item-actions">
+        <button onclick="decreaseQuantity(${index})" class="round-btn">−</button>
+        <button onclick="increaseQuantity(${index})" class="round-btn">+</button>
+        <button onclick="removeFromCart(${index})" class="delete-btn round-btn">🗑️</button>
       </div>
     </div>
   `;
 }
-
 
 function getCartTotalTemplate(total) {
   return `
     <div class="cart-total">
-      <strong>Gesamt:</strong> ${total.toFixed(2).replace(".", ",")} €
+      <strong>Gesamt: ${total.toFixed(2).replace(".", ",")} €</strong>
     </div>
-    <button onclick="placeOrder()" class="order-button">Jetzt bestellen</button>
+    <button class="order-button" onclick="placeOrder()">Bestellen</button>
   `;
 }
 
@@ -53,3 +46,11 @@ function getOrderSuccessTemplate() {
   `;
 }
 
+function getRatingTemplate(starsHTML, reviews) {
+  return `
+    <div class="rating">
+      <div class="stars">${starsHTML}</div>
+      <span class="review-count">${reviews.toLocaleString()} Bewertungen</span>
+    </div>
+  `;
+}
