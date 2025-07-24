@@ -1,11 +1,18 @@
 let menus = [];
 let prices = [];
 let amounts = [];
+const basket = document.getElementById("basket");
+const overlay = document.getElementById("overlay");
 
-for (let i = 0; i < menu.length; i++) {
-  menus.push(menu[i].name);
-  prices.push(menu[i].price);
-  amounts.push(0);
+function initMenus() {
+  menus = [];
+  prices = [];
+  amounts = [];
+  for (let i = 0; i < menu.length; i++) {
+    menus.push(menu[i].name);
+    prices.push(menu[i].price);
+    amounts.push(0);
+  }
 }
 
 function addToCart(index) {
@@ -44,10 +51,19 @@ function renderMenu() {
 function renderCart() {
   let cartBox = document.querySelector("#basket .cart-content");
   cartBox.innerHTML = "";
-  let total = 0;
-  let hasItems = false;
-  let totalCount = 0;
+  let { total, totalCount, hasItems } = renderCartItems(cartBox);
+  if (!hasItems) {
+    cartBox.innerHTML = "<p>Dein Warenkorb ist leer.</p>";
+  } else {
+    cartBox.innerHTML += getCartTotalTemplate(total);
+  }
+  updateCartCount(totalCount);
+}
 
+function renderCartItems(cartBox) {
+  let total = 0;
+  let totalCount = 0;
+  let hasItems = false;
   for (let i = 0; i < menus.length; i++) {
     if (amounts[i] > 0) {
       cartBox.innerHTML += getCartItemTemplate(menus[i], prices[i], amounts[i], i);
@@ -56,13 +72,10 @@ function renderCart() {
       hasItems = true;
     }
   }
+  return { total, totalCount, hasItems };
+}
 
-  if (!hasItems) {
-    cartBox.innerHTML = "<p>Dein Warenkorb ist leer.</p>";
-  } else {
-    cartBox.innerHTML += getCartTotalTemplate(total);
-  }
-
+function updateCartCount(totalCount) {
   let cartCountEl = document.getElementById("cartCount");
   if (totalCount > 0) {
     cartCountEl.style.display = "inline";
@@ -71,6 +84,7 @@ function renderCart() {
     cartCountEl.style.display = "none";
   }
 }
+
 
 function saveCart() {
   localStorage.setItem("amounts", JSON.stringify(amounts));
@@ -103,10 +117,7 @@ function showOrderMessage() {
   }, 3000);
 }
 
-const basket = document.getElementById("basket");
-const overlay = document.getElementById("overlay");
-
-document.getElementById("cartButton").addEventListener("click", () => {
+document.getElementById("cartToggle").addEventListener("click", () => {
   if (window.innerWidth <= 500) {
     basket.classList.add("mobile");
     basket.classList.add("open");
@@ -123,6 +134,7 @@ function closeCart() {
 }
 
 window.onload = function () {
+  initMenus();
   loadCart();
   renderMenu();
   renderCart();
